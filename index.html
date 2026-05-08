@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HarshAI+ Assistant - Your Smart AI Companion</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HarshAI+">
+    
+    <!-- Favicon & Icons -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">🤖</div>
+            <h1>HarshAI+</h1>
+            <p>Loading your AI Assistant...</p>
+            <div class="splash-dots">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app-container" class="app-container hidden">
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span>🤖</span>
+                    <h2>HarshAI+</h2>
+                </div>
+                <button id="new-chat-btn" class="btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    New Chat
+                </button>
+            </div>
+            
+            <div class="chat-history">
+                <div class="chat-item active" data-chat-id="current">
+                    <span class="chat-icon">💬</span>
+                    <div class="chat-info">
+                        <div class="chat-title">Current Chat</div>
+                        <div class="chat-preview">New conversation...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button id="clear-all-btn" class="btn-secondary">
+                    🗑️ Clear All
+                </button>
+                <div class="app-info">
+                    <div>Version 1.0.0</div>
+                    <div id="connection-status" class="status-online">🟢 Online</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Install Button -->
+        <button id="install-btn" class="install-btn hidden">
+            📱 Install App
+        </button>
+
+        <!-- Main Chat Area -->
+        <div class="main-content">
+            <!-- Welcome Screen -->
+            <div id="welcome-screen" class="welcome-screen">
+                <div class="welcome-content">
+                    <div class="welcome-avatar">🤖</div>
+                    <h1>Hello! I'm HarshAI+ Assistant</h1>
+                    <p>Your smart AI companion ready to help with anything.</p>
+                    
+                    <div class="quick-prompts">
+                        <h3>Try these quick prompts:</h3>
+                        <div class="prompt-buttons">
+                            <button class="prompt-btn" data-prompt="Explain quantum computing in simple terms">
+                                Explain Quantum Computing
+                            </button>
+                            <button class="prompt-btn" data-prompt="Write a motivational quote">
+                                Motivational Quote
+                            </button>
+                            <button class="prompt-btn" data-prompt="Help me plan my day">
+                                Plan My Day
+                            </button>
+                            <button class="prompt-btn" data-prompt="Tell me a fun fact">
+                                Fun Fact
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="messages-container" class="messages-container hidden">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <button id="voice-btn" class="voice-btn">
+                        <svg id="mic-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 15C13.6569 15 15 13.6569 15 12V6C15 4.34315 13.6569 3 12 3C10.3431 3 9 4.34315 9 6V12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M19 11V12C19 15.3137 16.3137 18 13 18H11C7.68629 18 5 15.3137 5 12V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 18V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M9 19H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="input-group">
+                        <textarea 
+                            id="message-input" 
+                            placeholder="Type your message... (Press Enter to send)"
+                            rows="1"
+                        ></textarea>
+                        <button id="send-btn" class="send-btn" disabled>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <button id="settings-btn" class="settings-btn">
+                        ⚙️
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="settings-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Settings</h3>
+                    <button id="close-settings" class="close-btn">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="setting-item">
+                        <label>Dark Mode</label>
+                        <label class="switch">
+                            <input type="checkbox" id="dark-mode-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>Auto-scroll</label>
+                        <label class="switch">
+                            <input type="checkbox" id="auto-scroll-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>Voice Responses</label>
+                        <label class="switch">
+                            <input type="checkbox" id="voice-response-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>Clear Chat History</label>
+                        <button class="btn-danger">Clear All</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="loading-spinner"></div>
+            <p>AI is thinking...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
